@@ -46,8 +46,8 @@ QString BitcoinUnits::description(int unit)
     switch(unit)
     {
     case BTC: return QString("vovcoin");
-    case mBTC: return QString("millibarcoin (1 / 1,000)");
-    case uBTC: return QString("microbarcoin (1 / 1,000,000)");
+    case mBTC: return QString("millivovcoin (1 / 1,000)");
+    case uBTC: return QString("microvovcoin (1 / 1,000,000)");
     default: return QString("???");
     }
 }

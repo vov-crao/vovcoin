@@ -545,7 +545,7 @@ public:
 
     static bool AllowFree(double dPriority)
     {
-        // Large (in bytes) low-priority (new, small-coin) transactions
+        // Large (in bytes) low-priority (new, vovcoin) transactions
         // need a fee.
         return dPriority > COIN * 576 / 250; // 5760 blocks found a day. Priority cutoff is 1 COIN day / 250 bytes.
     }
