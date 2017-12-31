@@ -108,7 +108,7 @@ void AskPassphraseDialog::accept()
                 if(model->setWalletEncrypted(true, newpass1))
                 {
                     QMessageBox::warning(this, tr("Wallet encrypted"),
-                                         tr("barcoin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your barcoin from being stolen by malware infecting your computer."));
+                                         tr("vovcoin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your vovcoin from being stolen by malware infecting your computer."));
                     QApplication::quit();
                 }
                 else
