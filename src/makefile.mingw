@@ -5,27 +5,27 @@
 USE_UPNP:=0
 
 INCLUDEPATHS= \
- -I"C:\deps\boost" \
- -I"C:\deps\db\build_unix" \
- -I"C:\deps\ssl\include"
+ -I"D:/prog/deps/boost_1_53_0" \
+ -I"D:/prog\deps\db-4.8.30.NC\build_unix" \
+ -I"D:/prog\deps\openssl-1.0.1e\include"
 
 LIBPATHS= \
- -L"C:\deps\boost\stage\lib" \
- -L"C:\deps\db\build_unix" \
- -L"C:\deps\ssl"
+ -L"D:/prog/deps/boost_1_53_0\stage\lib" \
+ -L"D:/prog\deps\db-4.8.30.NC\build_unix" \
+ -L"D:/prog\deps\openssl-1.0.1e"
 
 LIBS= \
- -l boost_system-mgw46-mt-s-1_49 \
- -l boost_filesystem-mgw46-mt-s-1_49 \
- -l boost_program_options-mgw46-mt-s-1_49 \
- -l boost_thread-mgw46-mt-s-1_49 \
+ -l boost_system-mgw53-mt-sd-1_53 \
+ -l boost_filesystem-mgw53-mt-sd-1_53 \
+ -l boost_program_options-mgw53-mt-sd-1_53 \
+ -l boost_thread-mgw53-mt-sd-1_53 \
  -l db_cxx \
  -l ssl \
  -l crypto
 
 DEFS=-DWIN32 -D_WINDOWS -DBOOST_THREAD_USE_LIB -DBOOST_SPIRIT_THREADSAFE -DUSE_IPV6 -D__NO_SYSTEM_INCLUDES
 DEBUGFLAGS=-g
-CFLAGS=-mthreads -O2 -w -Wall -Wextra -Wformat -Wformat-security -Wno-unused-parameter $(DEBUGFLAGS) $(DEFS) $(INCLUDEPATHS)
+CFLAGS=-std=gnu++11 -mthreads -O2 -w -Wall -Wextra -Wformat -Wformat-security -Wno-unused-parameter $(DEBUGFLAGS) $(DEFS) $(INCLUDEPATHS)
 
 TESTDEFS = -DTEST_DATA_DIR=$(abspath test/data)
 
@@ -83,7 +83,7 @@ test_vovcoin.exe: $(TESTOBJS) $(filter-out obj/init.o,$(OBJS:obj/%=obj/%))
 	g++ $(CFLAGS) -o $@ $(LIBPATHS) $^ -lboost_unit_test_framework $(LIBS)
 
 clean:
-        -del /Q vovcoin test_vovcoin
+	-del /Q vovcoin test_vovcoin
 	-del /Q obj\*
 	-del /Q obj-test\*
 	-del /Q build.h

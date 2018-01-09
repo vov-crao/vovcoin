@@ -1,0 +1,10 @@
+--- Jamroot	2012-12-11 17:42:26 +0300
++++ boost_1_53_0/Jamroot	2018-01-07 18:10:01 +0300
+@@ -151,6 +151,7 @@
+       # Comeau does not support shared lib
+       <toolset>como:<link>static
+       <toolset>como-linux:<define>_GNU_SOURCE=1
++	  <toolset>gcc:<cxxflags>-std=gnu++11
+       # When building docs within Boost, we want the standard Boost style
+       <xsl:param>boost.defaults=Boost
+     : usage-requirements <include>.

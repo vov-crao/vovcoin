@@ -8,6 +8,8 @@
 
 #include "uint256.h"
 
+#include <cstdlib>
+
 #ifndef WIN32
 #include <sys/types.h>
 #include <sys/time.h>

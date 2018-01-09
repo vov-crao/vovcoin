@@ -12,18 +12,19 @@ windows:LIBS += -lshlwapi
 LIBS += $$join(BOOST_LIB_PATH,,-L,) $$join(BDB_LIB_PATH,,-L,) $$join(OPENSSL_LIB_PATH,,-L,) $$join(QRENCODE_LIB_PATH,,-L,)
 LIBS += -lssl -lcrypto -ldb_cxx$$BDB_LIB_SUFFIX
 windows:LIBS += -lws2_32 -lole32 -loleaut32 -luuid -lgdi32
-LIBS += -lboost_system-mgw46-mt-sd-1_53 -lboost_filesystem-mgw46-mt-sd-1_53 -lboost_program_options-mgw46-mt-sd-1_53 -lboost_thread-mgw46-mt-sd-1_53
-BOOST_LIB_SUFFIX=-mgw46-mt-sd-1_53
-BOOST_INCLUDE_PATH=D:/prog/deps/boost
-BOOST_LIB_PATH=D:/prog/deps/boost/stage/lib
-BDB_INCLUDE_PATH=D:/prog/deps/db/build_unix
-BDB_LIB_PATH=D:/prog/deps/db/build_unix
-OPENSSL_INCLUDE_PATH=D:/prog/deps/ssl/include
-OPENSSL_LIB_PATH=D:/prog/deps/ssl
+LIBS += -lboost_system-mgw53-mt-sd-1_53 -lboost_filesystem-mgw53-mt-sd-1_53 -lboost_program_options-mgw53-mt-sd-1_53 -lboost_thread-mgw53-mt-sd-1_53
+BOOST_LIB_SUFFIX=-mgw53-mt-sd-1_53
+BOOST_INCLUDE_PATH=D:/prog/deps/boost_1_53_0
+BOOST_LIB_PATH=D:/prog/deps/boost_1_53_0/stage/lib
+BDB_INCLUDE_PATH=D:/prog/deps/db-4.8.30.NC/build_unix
+BDB_LIB_PATH=D:/prog/deps/db-4.8.30.NC/build_unix
+OPENSSL_INCLUDE_PATH=D:/prog/deps/openssl-1.0.1e/include
+OPENSSL_LIB_PATH=D:/prog/deps/openssl-1.0.1e
 
 OBJECTS_DIR = build
 MOC_DIR = build
 UI_DIR = build
+
 
 # use: qmake "RELEASE=1"
 contains(RELEASE, 1) {
@@ -71,9 +72,13 @@ contains(BITCOIN_NEED_QT_PLUGINS, 1) {
 
 !windows {
     # for extra security against potential buffer overflows
-    QMAKE_CXXFLAGS += -fstack-protector
+    QMAKE_CXXFLAGS += -fstack-protector -std=gnu++11
     QMAKE_LFLAGS += -fstack-protector
     # do not enable this on windows, as it will result in a non-working executable!
+}
+
+windows {
+    QMAKE_CXXFLAGS += -std=gnu++11
 }
 
 # regenerate src/build.h
@@ -86,7 +91,8 @@ contains(BITCOIN_NEED_QT_PLUGINS, 1) {
     DEFINES += HAVE_BUILD_INFO
 }
 
-QMAKE_CXXFLAGS_WARN_ON = -fdiagnostics-show-option -Wall -Wextra -Wformat -Wformat-security -Wno-unused-parameter
+# QMAKE_CXXFLAGS_WARN_ON = -fdiagnostics-show-option -Wall -Wextra -Wformat -Wformat-security -Wno-unused-parameter
+QMAKE_CXXFLAGS_WARN_ON = -fdiagnostics-show-option -Wformat -Wformat-security -Wno-unused-parameter -Wno-deprecated
 
 # Input
 DEPENDPATH += src src/json src/qt
@@ -334,7 +340,7 @@ macx:OBJECTIVE_SOURCES += src/qt/macdockiconhandler.mm
 macx:LIBS += -framework Foundation -framework ApplicationServices -framework AppKit
 macx:DEFINES += MAC_OSX MSG_NOSIGNAL=0
 macx:ICON = src/qt/res/icons/bitcoin.icns
-macx:TARGET = "vovcoin-qt"
+macx:TARGET = "bitcoin-qt"
 
 # Set libraries and includes at end, to use platform-defined defaults if not overridden
 INCLUDEPATH += $$BOOST_INCLUDE_PATH $$BDB_INCLUDE_PATH $$OPENSSL_INCLUDE_PATH $$QRENCODE_INCLUDE_PATH

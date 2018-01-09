@@ -1,0 +1,36 @@
+--- a/db-4.8.30.NC/dbreg/dbreg.c	2010-04-12 23:25:22 +0300
++++ db-4.8.30.NC/dbreg/dbreg.c	2018-01-07 17:12:26 +0300
+@@ -691,12 +691,13 @@
+ 	MUTEX_LOCK(env, lp->mtx_filelist);
+ 	for (fnp = SH_TAILQ_FIRST(&lp->fq, __fname); fnp != NULL; fnp = nnp) {
+ 		nnp = SH_TAILQ_NEXT(fnp, q, __fname);
+-		if (dbenv->is_alive(dbenv, fnp->pid, 0, DB_MUTEX_PROCESS_ONLY))
++		db_threadid_t unused;
++		if (dbenv->is_alive(dbenv, fnp->pid, unused, DB_MUTEX_PROCESS_ONLY))
+ 			continue;
+ 		MUTEX_LOCK(env, fnp->mutex);
+ 		__db_msg(env,
+ 		    "Freeing log information for process: %s, (ref %lu)",
+-		    dbenv->thread_id_string(dbenv, fnp->pid, 0, buf),
++		    dbenv->thread_id_string(dbenv, fnp->pid, unused, buf),
+ 		    (u_long)fnp->txn_ref);
+ 		if (fnp->txn_ref > 1 || F_ISSET(fnp, DB_FNAME_CLOSED)) {
+ 			if (!F_ISSET(fnp, DB_FNAME_CLOSED)) {
+--- a/db-4.8.30.NC/mutex/mut_failchk.c	2010-04-12 23:25:34 +0300
++++ db-4.8.30.NC/mutex/mut_failchk.c	2018-01-07 17:07:10 +0300
+@@ -49,12 +49,13 @@
+ 		 * The thread that allocated the mutex may have exited, but
+ 		 * we cannot reclaim the mutex if the process is still alive.
+ 		 */
++		db_threadid_t unused;
+ 		if (dbenv->is_alive(
+-		    dbenv, mutexp->pid, 0, DB_MUTEX_PROCESS_ONLY))
++		    dbenv, mutexp->pid, unused, DB_MUTEX_PROCESS_ONLY))
+ 			continue;
+ 
+ 		__db_msg(env, "Freeing mutex for process: %s",
+-		    dbenv->thread_id_string(dbenv, mutexp->pid, 0, buf));
++		    dbenv->thread_id_string(dbenv, mutexp->pid, unused, buf));
+ 
+ 		/* Unlock and free the mutex. */
+ 		if (F_ISSET(mutexp, DB_MUTEX_LOCKED))

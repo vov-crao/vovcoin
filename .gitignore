@@ -1,2 +1,12 @@
-vovCoin.*
+tonniCoin.*
 *.autosave
+tonniCoin/*
+*.o
+*.Debug
+*.Release
+debug/*
+release/*
+build/*
+*.exe
+*.tlp
+Makefile
