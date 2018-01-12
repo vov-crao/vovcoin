@@ -1,6 +1,7 @@
-tonniCoin.*
+vovCoin.*
 *.autosave
-tonniCoin/*
+vovCoin/*
+vovcoind
 *.o
 *.Debug
 *.Release
