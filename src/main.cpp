@@ -2015,7 +2015,7 @@ bool LoadBlockIndex(bool fAllowNew)
         block.hashMerkleRoot = block.BuildMerkleTree();
         block.nVersion = 1;
         block.nTime    = 1343395555; //epochtime
-        block.nBits    = 0x1e0ffff0;
+        block.nBits    = bnProofOfWorkLimit.GetCompact();// 0x1e0ffff0;
         block.nNonce   = 2612918;
 
         if (fTestNet)
